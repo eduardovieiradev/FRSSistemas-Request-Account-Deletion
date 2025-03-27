@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
@@ -53,30 +54,30 @@
         <p>Para solicitar a exclusão da sua conta, siga estas etapas:</p>
         <ul style="text-align: left;">
             <li>Digite seu CPF abaixo.</li>
-            <li>Envie um e-mail para <strong>suporte@homerico.com</strong> com o assunto "Solicitação de Exclusão".</li>
+            <li>Envie um e-mail para <strong>suporte@frssistemas.com.br</strong> com o assunto "Solicitação de Exclusão".</li>
             <li>Inclua no e-mail o CPF cadastrado e outras informações relevantes.</li>
             <li>Aguarde a confirmação da exclusão por e-mail.</li>
         </ul>
         <p>Todos os dados serão completamente excluídos sem período de armazenamento adicional.</p>
-        <input type="text" id="cpf" placeholder="Digite seu CPF">
+        <input type="text" id="cpf" placeholder="Digite seu CPF" maxlength="14" oninput="formatarCPF(this)">
         <p id="error" class="error"></p>
         <button onclick="validarCPF()">Solicitar Exclusão</button>
     </div>
 
     <script>
-        function formatarCPF(cpf) {
-            return cpf.replace(/\D/g, '')
-                      .replace(/(\d{3})(\d)/, '$1.$2')
-                      .replace(/(\d{3})(\d)/, '$1.$2')
-                      .replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+        function formatarCPF(campo) {
+            let cpf = campo.value.replace(/\D/g, '');
+            cpf = cpf.slice(0, 11);
+            cpf = cpf.replace(/(\d{3})(\d)/, '$1.$2')
+                     .replace(/(\d{3})(\d)/, '$1.$2')
+                     .replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+            campo.value = cpf;
         }
 
         function validarCPF() {
             const cpfInput = document.getElementById('cpf');
             const errorText = document.getElementById('error');
-            let cpf = cpfInput.value;
-            cpf = formatarCPF(cpf);
-            cpfInput.value = cpf;
+            const cpf = cpfInput.value;
 
             const cpfValido = /^\d{3}\.\d{3}\.\d{3}-\d{2}$/.test(cpf);
             if (!cpfValido) {
